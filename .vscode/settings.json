@@ -1,0 +1,12 @@
+{
+  "python.analysis.typeCheckingMode": "off",
+  "python.analysis.diagnosticMode": "openFilesOnly",
+  "python.formatting.provider": "black",
+  "python.linting.enabled": true,
+  "python.linting.pycodestyleEnabled": true,
+  "python.defaultInterpreterPath": "D:/PlayML/MLEnv/Scripts/python.exe",
+  "python.formatting.blackArgs": [
+    "--line-length=79",
+    "--experimental-string-processing"
+  ]
+}
