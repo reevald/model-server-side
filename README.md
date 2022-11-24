@@ -2,7 +2,7 @@
 
 ## How to Use
 ### 1) Clone Repo
-```
+```bash
 git clone https://github.com/reevald/model-server-side.git
 ```
 ### 2) Install library
@@ -10,8 +10,8 @@ git clone https://github.com/reevald/model-server-side.git
 pip install -r requirements.txt
 ```
 ### 3) Run!
-```
-python server.py
+```bash
+flask run
 ```
 ## API
 ![](sample-api.png)
