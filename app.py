@@ -2,17 +2,19 @@ from flask import Flask, jsonify, request
 from flask_cors import CORS
 from io import BytesIO
 from PIL import Image
-import gevent.pywsgi
 import tensorflow as tf
 import logging
 import base64
 import binascii
 
 app = Flask(__name__)
-model = None
-label = ["Paper (Kertas)", "Rock (Batu)", "Scissor (Gunting)"]
 CORS(app, support_credentials=True)
 logging.basicConfig(level=logging.INFO)
+
+label = ["Paper (Kertas)", "Rock (Batu)", "Scissor (Gunting)"]
+logging.info("[Start] Load model")
+model = tf.keras.models.load_model(r"model/model-v2.hdf5")
+logging.info("[Finish] Load model")
 
 
 @app.get("/")
@@ -33,9 +35,6 @@ def status_model():
 
 @app.post("/classifier")
 def classifier():
-    if request.method != "POST":
-        return "Nothing!, your method: " + request.method
-
     # 1) Cek dulu apakah model sudah dimuat atau belum
     if model is None:
         raise RuntimeError("Model not yet loaded")
@@ -77,16 +76,4 @@ def classifier():
 
 if __name__ == "__main__":
 
-    if model is None:
-        logging.info("[Start] Load model")
-        model = tf.keras.models.load_model(r"model/model-v2.hdf5")
-        logging.info("[Finish] Load model")
-    else:
-        raise RuntimeError("Model have been loaded")
-
-    # Untuk mode pengembangan
     app.run()
-
-    # Gunakan wsgi server untuk deployment (production)
-    # http_server = gevent.pywsgi.WSGIServer(("127.0.0.1", 80), app)
-    # http_server.serve_forever()
